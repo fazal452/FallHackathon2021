@@ -18,30 +18,34 @@ import time
 
 class booking:
 
-    def __init__(self, day, timeStart, duration):
-        #day goes from 0 - 6
+    def __init__(self, year, month, day, hour, minute, room):
+        self.year = year
+        self.month = month
         self.day = day
+        self.hour = hour
+        self.minute = minute
+        self.room = room
 
-        #time goes form 8.5 to 22.5 increment of .5
-        self.timeStart = timeStart
 
-        #duration is in increament of .5 all the way to 2
-        self.duration = duration
 
 
 #book1 = booking(0,7,60)
 
+#
+# #Authenticate User Firstly
+# browser = webdriver.Chrome()
+# browser.get('https://cas.sfu.ca/cas/login?method=browser%20=%20webdriver.Chrome()%20browser.get(%27http://roombrowser%20=%20webdriver.Chrome()%20browser.get(%27httpbrowser%20=%20webdriver.Chrome()%20browser.get(%27http://roombookings.lib.sfu.ca/studyrooms/day.php?area=1%27)://roombookings.lib.sfu.ca/studyrooms/day.php?area=1%27)bookings.lib.sfu.ca/studyrooms/day.php?area=1%27)POST&service=https://sims.erp.sfu.ca/psp/csprd/EMPLOYEE/SA/s/WEBLIB_SFU.ISCRIPT1.FieldFormula.IScript_Home')
+#
+# start = False
+#
+# start = input("enter 1 to start the program: ")
+#
+# if start:
+#     #Open up SFU Website
+#     browser.get('http://roombookings.lib.sfu.ca/studyrooms/day.php?area=1')
 
 
-#Authenticate User Firstly
+testBook = booking(1,1,1,2,2,2)
 
 browser = webdriver.Chrome()
-browser.get('https://cas.sfu.ca/cas/login?method=browser%20=%20webdriver.Chrome()%20browser.get(%27http://roombrowser%20=%20webdriver.Chrome()%20browser.get(%27httpbrowser%20=%20webdriver.Chrome()%20browser.get(%27http://roombookings.lib.sfu.ca/studyrooms/day.php?area=1%27)://roombookings.lib.sfu.ca/studyrooms/day.php?area=1%27)bookings.lib.sfu.ca/studyrooms/day.php?area=1%27)POST&service=https://sims.erp.sfu.ca/psp/csprd/EMPLOYEE/SA/s/WEBLIB_SFU.ISCRIPT1.FieldFormula.IScript_Home')
-
-start = False
-
-start = input("enter 1 to start the program: ")
-
-if start:
-    #Open up SFU Website
-    browser.get('http://roombookings.lib.sfu.ca/studyrooms/day.php?area=1')
+browser.get('http://roombookings.lib.sfu.ca/studyrooms/day.php?area=1')
