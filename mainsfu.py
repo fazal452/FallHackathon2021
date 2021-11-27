@@ -4,18 +4,6 @@ import time
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 class booking:
 
     def __init__(self, year, month, day, hour, minute, room):
@@ -42,7 +30,6 @@ submit = driver.find_element_by_name("submit")
 
 username.send_keys("fra22")
 password.send_keys("")
-
 submit.click()
 
 
@@ -54,17 +41,15 @@ if start:
     driver.get('http://roombookings.lib.sfu.ca/studyrooms/day.php?area=1')
 
 
-# year, month, day, hour, minute, room
-listBookings = [booking(2021,12,1,20,0,28),booking(2021,12,2,20,0,28),booking(2021,12,3,20,0,28),booking(2021,12,4,20,0,28),booking(2021,12,5,20,0,28)]
 
 
-for testBook in listBookings:
+def book(testbook):
 
-    bookID = "http://roombookings.lib.sfu.ca/studyrooms/add/"+"edit_entry.php?area=1&room=" + str(testBook.room) +"&hour=" + str(testBook.hour)+"&minute="+str(testBook.minute)+"&year="+ str(testBook.year) +"&month="+str(testBook.month)+"&day=" + str(testBook.day)
+    bookID = "http://roombookings.lib.sfu.ca/studyrooms/add/" + "edit_entry.php?area=1&room=" + str(
+        testBook.room) + "&hour=" + str(testBook.hour) + "&minute=" + str(testBook.minute) + "&year=" + str(
+        testBook.year) + "&month=" + str(testBook.month) + "&day=" + str(testBook.day)
 
-
-    #go to booking step
-
+    # go to booking step
     driver.get(bookID)
 
     time.sleep(2)
@@ -72,29 +57,42 @@ for testBook in listBookings:
     try:
         sessionName = driver.find_element_by_name("name")
 
-        sessionName.send_keys("some text")
+        sessionName.send_keys("CREATOR BOT")
 
-        timeDuration = driver.find_element_by_name("duration")
+        timeDuration = driver.find_element_by_xpath("/html/body/form/fieldset/div[4]/select/option[4]")
+        timeDuration.selected = "seleted"
 
         saveButton = driver.find_element_by_name("save_button")
 
         saveButton.click()
         time.sleep(2)
 
-        try:
-            rep = (driver.find_element_by_xpath('/html/body/h2').text)
-
-        except:
-            conflict = "null"
-
-        if "conflict" in rep.lower():
-            print("couldn't book")
-
-        else:
-            print("success")
 
     except:
-        print("failed to book")
+        return("Failed to book, Already booked for the day")
 
+    try:
+        rep = (driver.find_element_by_xpath('/html/body/h2').text)
+
+    except:
+        rep = "null"
+
+    if "conflict" in rep.lower():
+        return("Failed to book, Scheduling Conflict")
+
+    else:
+        return("Succesfully Booked")
+
+
+
+# year, month, day, hour, minute, room
+listBookings = [booking(2021,12,1,20,0,28),booking(2021,12,2,20,0,28),booking(2021,12,3,20,0,28),booking(2021,12,4,20,0,28),booking(2021,12,5,20,0,28)]
+
+
+for testBook in listBookings:
+
+    print(book(testBook))
+
+driver.close()
 
 
