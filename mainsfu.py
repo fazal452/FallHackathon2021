@@ -3,6 +3,10 @@ from selenium import webdriver
 
 
 
+
+
+
+
 #Open up SFU Website
 browser = webdriver.Chrome()
-browser.get('https://www.lib.sfu.ca/facilities/rooms-spaces/group-study-rooms')
+browser.get('http://roombookings.lib.sfu.ca/studyrooms/day.php?area=1')
