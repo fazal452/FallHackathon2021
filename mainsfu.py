@@ -45,7 +45,27 @@ class booking:
 #     browser.get('http://roombookings.lib.sfu.ca/studyrooms/day.php?area=1')
 
 
-testBook = booking(1,1,1,2,2,2)
+testBook = booking(2021,11,27,20,0,28)
 
-browser = webdriver.Chrome()
-browser.get('http://roombookings.lib.sfu.ca/studyrooms/day.php?area=1')
+listBookings = [booking(2021,11,27,20,0,28),booking(2021,11,28,20,0,28),booking(2021,11,29,20,0,28),booking(2021,11,30,20,0,28)]
+
+driver = webdriver.Chrome()
+
+for i in listBookings:
+
+    bookID = "http://roombookings.lib.sfu.ca/studyrooms/add/"+"edit_entry.php?area=1&room=" + str(testBook.room) +"&hour=" + str(testBook.hour)+"&minute="+str(testBook.minute)+"&year="+ str(testBook.year) +"&month="+str(testBook.month)+"&day=" + str(testBook.day)
+
+    #go to booking step
+    driver.get(bookID)
+
+    sessionName = driver.find_element_by_name("name")
+
+    sessionName.send_keys("some text")
+
+    timeDuration = driver.find_element_by_name("duration")
+
+    saveButton = driver.find_element_by_name("save_button")
+
+    saveButton.click()
+
+
