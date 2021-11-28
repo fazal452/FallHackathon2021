@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 from selenium import webdriver
+import datetime
 import time
 from selenium.webdriver.support.ui import Select
 
-
+results = []
 
 class booking:
 
@@ -15,6 +16,55 @@ class booking:
         self.minute = minute
         self.room = room
         self.duration = duration
+
+
+arr = [["12:00","13:30"],["13:30","15:00"],["12:00","15:00"],["12:00","14:30"],["13:30","15:00"],["12:00","12:30"],["12:00","14:30"],2003]
+
+temp = arr[0]
+
+arr[0] = arr[-1]
+
+arr[-1] = temp
+
+for i in arr:
+    if 'm' in arr:
+        i = ("10:00","10:00")
+
+
+
+#should be [room, mon, tues.....sun]
+
+
+# year, month, day, hour, minutes, room
+listBookings = []
+
+
+now = datetime.datetime.now()
+
+
+date = datetime.datetime(now.year,now.month,now.day,now.hour,now.minute,now.second)
+
+for day in range(13):
+    # ["1200","1300"]
+
+    weekdate = arr[date.weekday() + 1]
+
+    start = weekdate[0]
+
+    startHours = weekdate[0][0:2]
+    startMins = weekdate[0][3:5]
+
+    end = weekdate[1]
+    endHours = weekdate[1][0:2]
+    endMins = weekdate[1][3:5]
+
+
+    dura = float((float(endHours) - float(startHours)) + (float(endMins)-float(startMins))/60)
+
+
+    listBookings.append(booking(date.year,date.month,date.day,startHours,startMins,arr[0],dura))
+
+    date += datetime.timedelta(days=1)
 
 
 
@@ -72,6 +122,7 @@ def book(testbook):
 
 
     except:
+        results.append(1)
         return("Failed to book, Already booked for the day")
 
     try:
@@ -81,20 +132,27 @@ def book(testbook):
         rep = "null"
 
     if "conflict" in rep.lower():
+        results.append(2)
         return("Failed to book, Scheduling Conflict")
 
     else:
+        results.append(0)
         return("Succesfully Booked")
 
 
 
-# year, month, day, hour, minute, room
-listBookings = [booking(2021,12,1,20,0,28,2),booking(2021,12,2,20,0,28,2),booking(2021,12,3,20,0,28,2),booking(2021,12,4,20,0,28,2),booking(2021,12,5,20,0,28,2)]
-
 
 for testBook in listBookings:
 
-    print(book(testBook))
+    if testBook.duration < 0:
+        results.append(2)
+
+    if testBook.duration > 2:
+        results.append(2)
+
+
+    if testBook.duration > 0 and testBook.duration < 2:
+        print(book(testBook))
 
 driver.close()
 
