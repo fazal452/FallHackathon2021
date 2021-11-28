@@ -1,18 +1,20 @@
 #!/usr/bin/env python
 from selenium import webdriver
 import time
+from selenium.webdriver.support.ui import Select
 
 
 
 class booking:
 
-    def __init__(self, year, month, day, hour, minute, room):
+    def __init__(self, year, month, day, hour, minute, room,duration):
         self.year = year
         self.month = month
         self.day = day
         self.hour = hour
         self.minute = minute
         self.room = room
+        self.duration = duration
 
 
 
@@ -59,8 +61,9 @@ def book(testbook):
 
         sessionName.send_keys("CREATOR BOT")
 
-        timeDuration = driver.find_element_by_xpath("/html/body/form/fieldset/div[4]/select/option[4]")
-        timeDuration.selected = "seleted"
+        timeDuration = Select(driver.find_element_by_id('duration'))
+
+        timeDuration.select_by_value(str(testbook.duration))
 
         saveButton = driver.find_element_by_name("save_button")
 
@@ -86,7 +89,7 @@ def book(testbook):
 
 
 # year, month, day, hour, minute, room
-listBookings = [booking(2021,12,1,20,0,28),booking(2021,12,2,20,0,28),booking(2021,12,3,20,0,28),booking(2021,12,4,20,0,28),booking(2021,12,5,20,0,28)]
+listBookings = [booking(2021,12,1,20,0,28,2),booking(2021,12,2,20,0,28,2),booking(2021,12,3,20,0,28,2),booking(2021,12,4,20,0,28,2),booking(2021,12,5,20,0,28,2)]
 
 
 for testBook in listBookings:
